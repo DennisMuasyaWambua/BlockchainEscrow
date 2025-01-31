@@ -117,7 +117,7 @@ class CreateRepositoryView(APIView):
 
             if response.status_code == 201:
                 # Save the repository locally
-                Repo.objects.create(
+                repo = Repo.objects.create(
                     owner=owner,
                     name=name,
                     description=description,
@@ -126,6 +126,8 @@ class CreateRepositoryView(APIView):
                     has_projects=has_projects,
                     has_wiki=has_wiki,
                 )
+                # Create the GitHub Actions workflow
+                self.create_github_actions_workflow(repo)
 
                 return Response(
                     {"status": True, "message": "Repository created successfully"},
@@ -191,7 +193,7 @@ class CreateRepositoryView(APIView):
             }
         }
 
-        url = f"{github_api_endpoint}/repos/{github_username}/{repo.name}/contents/.github/workflows/main.yml"
+        url = f"{github_api_endpoint}/repos/{github_username}/{repo.name}/actions/workflows"
         headers = {
             "Authorization": f"Bearer {github_token}",
             "Content-Type": "application/json"
@@ -204,5 +206,14 @@ class CreateRepositoryView(APIView):
         response = requests.put(url, headers=headers, data=json.dumps(data))
         if response.status_code == 201:
             print("GitHub Actions workflow created successfully.")
+            return Response(
+                    {"status": True, "message": "Workflow created successfully"},
+                    status=status.HTTP_201_CREATED,
+                )
+
         else:
             print(f"Error creating GitHub Actions workflow: {response.status_code} - {response.json()['message']}")
+            return Response(
+                    {"status": True, "message": "Workflow not created"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
