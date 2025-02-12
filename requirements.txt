@@ -7,3 +7,4 @@ python-decouple
 requests
 psycopg2-binary
 gunicorn
+PyYAML
