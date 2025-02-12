@@ -89,7 +89,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 DATABASE_URL = os.getenv("DATABASE_PUBLIC_URL","").strip()
 
-print(DATABASE_URL)
+
 
 DATABASES = {
 'default': dj_database_url.config(default=DATABASE_URL, conn_max_age = 1800),
