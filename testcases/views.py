@@ -80,9 +80,10 @@ class CreateRepositoryView(APIView):
 
         if serializer.is_valid():
             # Extract validated data
+            framework = serializer.validated_data.get("framework")
             owner = request.user
             name = serializer.validated_data.get("name")
-            amount = serializer.validated_data.get("amount")
+            testcase = serializer.validated_data.get("testcase")
             description = serializer.validated_data.get("description", "")
             private = serializer.validated_data.get("private", False)
             has_issues = serializer.validated_data.get("has_issues", True)
@@ -121,9 +122,10 @@ class CreateRepositoryView(APIView):
             if response.status_code == 201:
                 # Save the repository locally
                 repo = Repo.objects.create(
+                    framework=framework,
                     owner=owner,
                     name=name,
-                    amount=amount,
+                    testcase=testcase,
                     description=description,
                     private=private,
                     has_issues=has_issues,
