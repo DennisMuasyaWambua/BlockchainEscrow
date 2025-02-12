@@ -151,3 +151,6 @@ GITHUB_TOKEN = config('GITHUB_TOKEN',)
 
 
 AUTH_USER_MODEL = "testcases.User"
+MEDIA_ROOT = BASE_DIR /'media'
+MEDIA_URL = '/media/'
+STATIC_ROOT = BASE_DIR / 'static'
