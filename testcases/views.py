@@ -80,6 +80,7 @@ class CreateRepositoryView(APIView):
             # Extract validated data
             owner = request.user
             name = serializer.validated_data.get("name")
+            amount = serializer.validated_data.get("amount")
             description = serializer.validated_data.get("description", "")
             private = serializer.validated_data.get("private", False)
             has_issues = serializer.validated_data.get("has_issues", True)
@@ -120,6 +121,7 @@ class CreateRepositoryView(APIView):
                 repo = Repo.objects.create(
                     owner=owner,
                     name=name,
+                    amount=amount,
                     description=description,
                     private=private,
                     has_issues=has_issues,

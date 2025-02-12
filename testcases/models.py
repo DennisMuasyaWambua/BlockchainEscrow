@@ -14,6 +14,7 @@ class User(AbstractUser):
 class Repo(models.Model):
       owner = models.ForeignKey(User, on_delete=models.CASCADE)
       name = models.CharField(max_length=255)
+      amount = models.DecimalField(max_digits=10, decimal_places=2,default=0.00)
       framework = models.CharField(max_length=255)
       description = models.CharField(max_length=255)
       private = models.BooleanField(default=False)
