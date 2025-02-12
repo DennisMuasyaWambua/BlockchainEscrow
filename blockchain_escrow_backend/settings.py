@@ -85,10 +85,11 @@ WSGI_APPLICATION = 'blockchain_escrow_backend.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+CORS_ALLOW_ALL_ORIGINS = True
 
 DATABASES = {
     'default': dj_database_url.config(default=os.getenv("DATABASE_PUBLIC_URL"))
-    }
+}
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -143,5 +144,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 GITHUB_TOKEN = config('GITHUB_TOKEN',)
 
-CORS_ORIGIN_ALLOW_ALL = True
+
 AUTH_USER_MODEL = "testcases.User"
