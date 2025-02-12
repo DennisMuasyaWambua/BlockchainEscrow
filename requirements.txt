@@ -2,6 +2,7 @@ django
 djangorestframework
 django-cors-headers
 djangorestframework-simplejwt
+dj_database_url
 python-decouple
 requests
 psycopg2-binary

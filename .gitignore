@@ -5,6 +5,9 @@
 __pycache__
 db.sqlite3
 media
+*.sqlite3
+__pycache__/
+venv/
 
 # Backup files # 
 *.bak 
