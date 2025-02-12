@@ -154,72 +154,11 @@ class CreateRepositoryView(APIView):
             {"status": False, "message": "Invalid data", "errors": serializer.errors},
             status=status.HTTP_400_BAD_REQUEST,
         )
-    # def create_github_actions_workflow(self, repo):
-    #     github_api_endpoint = "https://api.github.com"
-    #     github_token = settings.GITHUB_TOKEN
-    #     github_username = "KibokoDao-Africa"
 
-    #     workflow_content = {
-    #         "name": "CI",
-    #         "on": {
-    #             "push": {
-    #                 "branches": ["main"]
-    #             },
-    #             "pull_request": {
-    #                 "branches": ["main"]
-    #             }
-    #         },
-    #         "jobs": {
-    #             "test-python": {
-    #                 "runs-on": "ubuntu-latest",
-    #                 "steps": [
-    #                     {"uses": "actions/checkout@v2"},
-    #                     {"name": "Set up Python", "uses": "actions/setup-python@v2", "with": {"python-version": "3.9"}},
-    #                     {"name": "Install dependencies", "run": "python -m pip install --upgrade pip\npip install pytest"},
-    #                     {"name": "Test with pytest", "run": "pytest"}
-    #                 ]
-    #             },
-    #             "test-javascript": {
-    #                 "runs-on": "ubuntu-latest",
-    #                 "steps": [
-    #                     {"uses": "actions/checkout@v2"},
-    #                     {"name": "Use Node.js", "uses": "actions/setup-node@v2", "with": {"node-version": "14"}},
-    #                     {"run": "npm ci"},
-    #                     {"run": "npm test"}
-    #                 ]
-    #             },
-    #             "test-java": {
-    #                 "runs-on": "ubuntu-latest",
-    #                 "steps": [
-    #                     {"uses": "actions/checkout@v2"},
-    #                     {"name": "Set up JDK 11", "uses": "actions/setup-java@v2", "with": {"java-version": "11", "distribution": "adopt"}},
-    #                     {"name": "Build with Maven", "run": "mvn clean verify"}
-    #                 ]
-    #             }
-    #         }
-    #     }
-
-    #     url = f"{github_api_endpoint}/repos/{github_username}/{repo.name}/actions/workflows"
-    #     headers = {
-    #         "Authorization": f"Bearer {github_token}",
-    #         "Content-Type": "application/json"
-    #     }
-    #     data = {
-    #         "content": json.dumps(workflow_content).encode().decode("utf-8"),
-    #         "message": "Add GitHub Actions workflow"
-    #     }
-
-    #     response = requests.put(url, headers=headers, data=json.dumps(data))
-    #     if response.status_code == 201:
-    #         print("GitHub Actions workflow created successfully.")
-    #         return Response(
-    #                 {"status": True, "message": "Workflow created successfully"},
-    #                 status=status.HTTP_201_CREATED,
-    #             )
-
-    #     else:
-    #         print(f"Error creating GitHub Actions workflow: {response.status_code} - {response.json()['message']}")
-    #         return Response(
-    #                 {"status": True, "message": "Workflow not created"},
-    #                 status=status.HTTP_400_BAD_REQUEST,
-    #             )
+class GetRepositories(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        repositories = Repo.objects.all()
+        serializer = RepoSerializer(repositories, many=True)
+        return Response(serializer.data)
+    
