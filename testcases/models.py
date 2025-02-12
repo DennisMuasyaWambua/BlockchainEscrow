@@ -15,7 +15,7 @@ class Repo(models.Model):
       owner = models.ForeignKey(User, on_delete=models.CASCADE)
       name = models.CharField(max_length=255)
       amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-      testcase = models.FileField(upload_to='testcases/', null=True, blank=True)  # Add null=True and blank=True
+      testcase = models.FileField(upload_to='workflows/', null=True, blank=True)  # Add null=True and blank=True
       created_at = models.DateTimeField(auto_now=True)
       framework = models.CharField(max_length=255)
       description = models.CharField(max_length=255)
