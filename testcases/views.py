@@ -11,6 +11,7 @@ import jwt, requests, logging
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.conf import settings
 from rest_framework import status
+import json
 
 # Create your views here.
 class RegisterView(APIView):
